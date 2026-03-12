@@ -60,16 +60,14 @@ function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
 
-  // --- REFINED PLAY LOGIC (Desktop + Mobile) ---
   const handlePlay = () => {
     if (videoRef.current && item.videoPath) {
       videoRef.current.muted = isMuted
       const playPromise = videoRef.current.play()
-      
       if (playPromise !== undefined) {
         playPromise
           .then(() => setIsPlaying(true))
-          .catch(() => console.log("Playback interaction required"))
+          .catch(() => console.log("Interaction required"))
       }
     }
   }
@@ -82,7 +80,6 @@ function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
     }
   }
 
-  // --- MANUAL CONTROLS ---
   const togglePlayPause = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation()
     if (videoRef.current) {
@@ -107,17 +104,17 @@ function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
     <motion.div 
       onMouseEnter={handlePlay}
       onMouseLeave={handleStop}
-      onTouchStart={handlePlay} // Mobile Support
+      onTouchStart={handlePlay} 
       className="group relative"
     >
       <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-border bg-card shadow-lg transition-all duration-500 hover:shadow-2xl">
         
-       {/* Media Layer */}
        <div className="absolute inset-0 w-full h-full bg-black flex items-center justify-center">
           {item.videoPath ? (
             <video
               ref={videoRef}
               src={item.videoPath}
+              preload="none" // STOP AUTO-DOWNLOADING
               className="w-full h-full object-cover"
               onEnded={() => setIsPlaying(false)}
               playsInline 
@@ -129,19 +126,14 @@ function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
               src={item.image}
               alt={item.title}
               className={`w-full h-full transition-transform duration-700 group-hover:scale-105 ${
-                // If it's the Eli-4 image, contain it so text doesn't crop. 
-                // Otherwise, cover it for a premium look.
                 item.image?.includes('eli-4') ? 'object-contain bg-[#0b0e11]' : 'object-cover'
               }`}
             />
           )}
         </div>
-        
-        {/* Dynamic Overlays */}
-        <div className={`absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent transition-opacity duration-500 ${isPlaying ? 'opacity-40' : 'opacity-80'}`} />
-        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Video Interaction UI */}
+        <div className={`absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent transition-opacity duration-500 ${isPlaying ? 'opacity-40' : 'opacity-80'}`} />
+        
         {item.videoPath && (
           <>
             <motion.button
@@ -153,14 +145,13 @@ function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
 
             <button
               onClick={toggleMute}
-              className="absolute bottom-24 right-6 p-2.5 rounded-full bg-black/40 hover:bg-primary text-white backdrop-blur-md md:opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 active:scale-90"
+              className="absolute bottom-24 right-6 p-2.5 rounded-full bg-black/40 hover:bg-primary text-white backdrop-blur-md md:opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
             >
               {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
             </button>
           </>
         )}
 
-        {/* Content Info */}
         <div className="absolute inset-0 p-6 flex flex-col justify-between z-10 pointer-events-none">
           <div className="flex items-start justify-between pointer-events-auto">
             <span className="px-3 py-1 bg-background/50 backdrop-blur-md border border-border rounded-full text-[10px] uppercase tracking-widest text-foreground font-bold flex items-center gap-2">
@@ -197,13 +188,11 @@ export function PortfolioCards() {
           <div>
             <p className="text-sm text-primary uppercase tracking-widest mb-4 font-bold">Portfolio</p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-balance tracking-tighter">
-              Selected Works
-              <br />
-              <span className="text-muted-foreground">2024 — 2026</span>
+              Selected Works<br /><span className="text-muted-foreground">2024 — 2026</span>
             </h2>
           </div>
           <p className="text-muted-foreground max-w-sm text-base leading-relaxed">
-            A curated selection of projects where sonic innovation meets visual storytelling.
+            Sonic innovation meets visual storytelling.
           </p>
         </motion.div>
 
