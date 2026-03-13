@@ -21,7 +21,7 @@ const testimonials: Testimonial[] = [
     name: "Glen",
     role: "Executive Producer",
     company: "Epic Records",
-    videoPath: "/videos/testimonials.mp4",
+    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773385921/WhatsApp_Video_2026-03-11_at_20.02.47_1_nujgbe.mp4",
     quote: "The transformation in our workflow has been extraordinary. What once took weeks now happens in days.",
     image: "/Images/eli-2.jpeg"
   },
@@ -30,7 +30,7 @@ const testimonials: Testimonial[] = [
     name: "Seyi max",
     role: "Music Director",
     company: "Universal Music Group",
-    videoPath: "/videos/testimonials-1.mp4",
+    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773385903/WhatsApp_Video_2026-03-11_at_20.02.45_3_nxacuh.mp4",
     quote: "We've never seen production quality like this. The level of detail and creativity is unmatched.",
     image: "/Images/eli-1.jpeg"
   },
@@ -39,7 +39,7 @@ const testimonials: Testimonial[] = [
     name: "Sypher",
     role: "Sound Engineer",
     company: "Sony Music",
-    videoPath: "/videos/testimonials-2.mp4",
+    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773385933/WhatsApp_Video_2026-03-12_at_17.54.14_xqqkik.mp4",
     quote: "This has completely redefined how we approach audio production. The results speak for themselves.",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
   },
@@ -83,7 +83,7 @@ function VideoTestimonialCard({ testimonial, index }: { testimonial: Testimonial
           <video
             ref={videoRef}
             src={testimonial.videoPath}
-            preload="none" // STOP AUTO-DOWNLOADING
+            preload="metadata" // Optimized: Loads tiny info but doesn't clog the network
             playsInline
             muted={isMuted}
             className="w-full h-full object-cover"
@@ -169,14 +169,14 @@ export function Testimonials() {
           ))}
         </motion.div>
 
-        <div className="mt-20 grid grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div><p className="text-4xl font-bold text-primary">500+</p><p className="text-muted-foreground text-sm">Clients</p></div>
-          <div><p className="text-4xl font-bold text-primary">98%</p><p className="text-muted-foreground text-sm">Satisfaction</p></div>
-          <div><p className="text-4xl font-bold text-primary">1B+</p><p className="text-muted-foreground text-sm">Streams</p></div>
+        <div className="mt-20 grid grid-cols-3 gap-8 max-w-4xl mx-auto border-t border-border pt-20">
+          <div><p className="text-4xl font-bold text-primary">500+</p><p className="text-muted-foreground text-sm uppercase tracking-tighter">Active Clients</p></div>
+          <div><p className="text-4xl font-bold text-primary">98%</p><p className="text-muted-foreground text-sm uppercase tracking-tighter">Satisfaction</p></div>
+          <div><p className="text-4xl font-bold text-primary">1B+</p><p className="text-muted-foreground text-sm uppercase tracking-tighter">Total Streams</p></div>
         </div>
 
         <div className="mt-20">
-          <Button size="lg" className="rounded-full">Start Your Journey Today</Button>
+          <Button size="lg" className="rounded-full px-8 py-6 text-lg hover:scale-105 transition-transform">Start Your Journey Today</Button>
         </div>
       </div>
     </section>

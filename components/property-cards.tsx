@@ -10,7 +10,7 @@ const portfolioItems = [
     title: "Midnight Echoes",
     artist: "LUNA",
     category: "Full Production",
-    videoPath: "/videos/test-1.mp4",
+    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387526/WhatsApp_Video_2026-03-12_at_19.17.31_3_aep6ks.mp4",
     stats: "12M Streams",
   },
   {
@@ -18,7 +18,7 @@ const portfolioItems = [
     title: "Rise Up",
     artist: "PHOENIX",
     category: "Songwriting",
-    videoPath: "/videos/test-2.mp4",
+    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387495/WhatsApp_Video_2026-03-12_at_19.17.30_1_o82fpl.mp4",
     stats: "8M Streams",
   },
   {
@@ -34,7 +34,7 @@ const portfolioItems = [
     title: "Soundscape",
     artist: "AURORA",
     category: "Music & Branding",
-    videoPath: "/videos/test-3.mp4",
+    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387357/WhatsApp_Video_2026-03-12_at_19.17.29_2_pjderd.mp4",
     stats: "Label Deal",
   },
   {
@@ -114,7 +114,7 @@ function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
             <video
               ref={videoRef}
               src={item.videoPath}
-              preload="none" // STOP AUTO-DOWNLOADING
+              preload="metadata" // CHANGED: Ready to play without clogging the site
               className="w-full h-full object-cover"
               onEnded={() => setIsPlaying(false)}
               playsInline 
@@ -152,6 +152,7 @@ function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
           </>
         )}
 
+        {/* Content Info */}
         <div className="absolute inset-0 p-6 flex flex-col justify-between z-10 pointer-events-none">
           <div className="flex items-start justify-between pointer-events-auto">
             <span className="px-3 py-1 bg-background/50 backdrop-blur-md border border-border rounded-full text-[10px] uppercase tracking-widest text-foreground font-bold flex items-center gap-2">
