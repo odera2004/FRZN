@@ -126,14 +126,6 @@ export function Footer() {
         </div>
       </div>
       
-      {/* Large brand text */}
-      <div className="border-t border-border overflow-hidden">
-        <div className="container mx-auto px-6 py-8">
-          <p className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter text-foreground/5 text-center whitespace-nowrap">
-            FRZN SOCIETY
-          </p>
-        </div>
-      </div>
     </footer>
   )
 }

@@ -1,214 +1,194 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { ArrowUpRight, Play, Pause, Volume2, VolumeX } from "lucide-react"
-import { useRef, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Play, Pause, SkipBack, SkipForward, Volume2, Music, Disc } from "lucide-react"
+import { useRef, useState, useEffect } from "react"
 
-const portfolioItems = [
+const tracks = [
   {
     id: 1,
     title: "Midnight Echoes",
     artist: "LUNA",
+    duration: "3:42",
     category: "Full Production",
-    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387526/WhatsApp_Video_2026-03-12_at_19.17.31_3_aep6ks.mp4",
-    stats: "12M Streams",
+    audioPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387526/WhatsApp_Video_2026-03-12_at_19.17.31_3_aep6ks.mp4", // Cloudinary handles audio from video files too!
+    cover: "/Images/eli-1.jpeg"
+  },
+  {
+    id: 2,
+    title: "Rise Up",
+    artist: "PHOENIX",
+    duration: "2:58",
+    category: "Songwriting",
+    audioPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387495/WhatsApp_Video_2026-03-12_at_19.17.30_1_o82fpl.mp4",
+    cover: "/Images/eli-2.jpeg"
   },
   {
     id: 3,
-    title: "Rise Up",
-    artist: "PHOENIX",
-    category: "Songwriting",
-    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387495/WhatsApp_Video_2026-03-12_at_19.17.30_1_o82fpl.mp4",
-    stats: "8M Streams",
-  },
-  {
-    id: 4,
     title: "Neon Dreams",
     artist: "CIPHER",
-    category: "Full Production",
-    image: "/Images/eli-3.jpeg",
-    stats: "25M Streams",
-  },
-  {
-    id: 5,
-    title: "Soundscape",
-    artist: "AURORA",
-    category: "Music & Branding",
-    videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387357/WhatsApp_Video_2026-03-12_at_19.17.29_2_pjderd.mp4",
-    stats: "Label Deal",
-  },
-  {
-    id: 6,
-    title: "Evolve",
-    artist: "NEXUS",
-    category: "Full Rebrand",
-    image: "/Images/eli-4.jpeg",
-    stats: "30M Reach",
+    duration: "3:15",
+    category: "Mixing & Mastering",
+    audioPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387357/WhatsApp_Video_2026-03-12_at_19.17.29_2_pjderd.mp4",
+    cover: "/Images/eli-3.jpeg"
   },
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-}
-
-function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
+export function PortfolioPlaylist() {
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted] = useState(true)
+  const [progress, setProgress] = useState(0)
+  const audioRef = useRef<HTMLAudioElement>(null)
 
-  const handlePlay = () => {
-    if (videoRef.current && item.videoPath) {
-      videoRef.current.muted = isMuted
-      const playPromise = videoRef.current.play()
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => setIsPlaying(true))
-          .catch(() => console.log("Interaction required"))
-      }
-    }
-  }
+  const currentTrack = tracks[currentTrackIndex]
 
-  const handleStop = () => {
-    if (videoRef.current && item.videoPath) {
-      videoRef.current.pause()
-      videoRef.current.currentTime = 0
-      setIsPlaying(false)
-    }
-  }
-
-  const togglePlayPause = (e: React.MouseEvent | React.TouchEvent) => {
-    e.stopPropagation()
-    if (videoRef.current) {
+  useEffect(() => {
+    if (audioRef.current) {
       if (isPlaying) {
-        videoRef.current.pause()
-        setIsPlaying(false)
+        audioRef.current.play().catch(() => setIsPlaying(false))
       } else {
-        handlePlay()
+        audioRef.current.pause()
       }
     }
-  }
+  }, [isPlaying, currentTrackIndex])
 
-  const toggleMute = (e: React.MouseEvent | React.TouchEvent) => {
-    e.stopPropagation()
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted
-      setIsMuted(!isMuted)
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      const p = (audioRef.current.currentTime / audioRef.current.duration) * 100
+      setProgress(p)
     }
   }
 
+  const togglePlay = () => setIsPlaying(!isPlaying)
+
+  const playTrack = (index: number) => {
+    setCurrentTrackIndex(index)
+    setIsPlaying(true)
+  }
+
   return (
-    <motion.div 
-      onMouseEnter={handlePlay}
-      onMouseLeave={handleStop}
-      onTouchStart={handlePlay} 
-      className="group relative"
-    >
-      <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-border bg-card shadow-lg transition-all duration-500 hover:shadow-2xl">
-        
-       <div className="absolute inset-0 w-full h-full bg-black flex items-center justify-center">
-          {item.videoPath ? (
-            <video
-              ref={videoRef}
-              src={item.videoPath}
-              preload="metadata" // CHANGED: Ready to play without clogging the site
-              className="w-full h-full object-cover"
-              onEnded={() => setIsPlaying(false)}
-              playsInline 
-              muted={isMuted}
-              loop
-            />
-          ) : (
-            <img
-              src={item.image}
-              alt={item.title}
-              className={`w-full h-full transition-transform duration-700 group-hover:scale-105 ${
-                item.image?.includes('eli-4') ? 'object-contain bg-[#0b0e11]' : 'object-cover'
-              }`}
-            />
-          )}
-        </div>
-
-        <div className={`absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent transition-opacity duration-500 ${isPlaying ? 'opacity-40' : 'opacity-80'}`} />
-        
-        {item.videoPath && (
-          <>
-            <motion.button
-              onClick={togglePlayPause}
-              className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-white/20 text-white flex items-center justify-center md:opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-md z-20"
-            >
-              {isPlaying ? <Pause className="fill-current" /> : <Play className="fill-current ml-1" />}
-            </motion.button>
-
-            <button
-              onClick={toggleMute}
-              className="absolute bottom-24 right-6 p-2.5 rounded-full bg-black/40 hover:bg-primary text-white backdrop-blur-md md:opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
-            >
-              {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-            </button>
-          </>
-        )}
-
-        {/* Content Info */}
-        <div className="absolute inset-0 p-6 flex flex-col justify-between z-10 pointer-events-none">
-          <div className="flex items-start justify-between pointer-events-auto">
-            <span className="px-3 py-1 bg-background/50 backdrop-blur-md border border-border rounded-full text-[10px] uppercase tracking-widest text-foreground font-bold flex items-center gap-2">
-              {item.videoPath && isPlaying && <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />}
-              {item.category}
-            </span>
-          </div>
-
-          <div className="pointer-events-auto text-foreground">
-            <p className="text-sm text-muted-foreground mb-1 font-medium">{item.artist}</p>
-            <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-            <div className="flex items-center justify-between">
-              <p className="text-xs text-primary font-bold tracking-widest uppercase">{item.stats}</p>
-              <ArrowUpRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
-export function PortfolioCards() {
-  return (
-    <section id="portfolio" className="py-24 md:py-32 bg-background">
+    <section id="portfolio" className="py-24 bg-background overflow-hidden">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16"
-        >
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
           <div>
-            <p className="text-sm text-primary uppercase tracking-widest mb-4 font-bold">Portfolio</p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-balance tracking-tighter">
-              Selected Works<br /><span className="text-muted-foreground">2024 — 2026</span>
-            </h2>
+            <p className="text-sm text-primary uppercase tracking-[0.3em] font-bold mb-4 text-center md:text-left">Discography</p>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-center md:text-left">THE SOUNDBOARD</h2>
           </div>
-          <p className="text-muted-foreground max-w-sm text-base leading-relaxed">
-            Sonic innovation meets visual storytelling.
+          <p className="text-muted-foreground max-w-xs text-center md:text-right text-sm leading-relaxed">
+            A curated selection of sonic identities crafted for the global stage.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {portfolioItems.map((item) => (
-            <PortfolioItem key={item.id} item={item} />
-          ))}
-        </motion.div>
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          {/* Left: Interactive Playlist (Spotify Clone Style) */}
+          <div className="lg:col-span-7 space-y-2">
+            {tracks.map((track, index) => (
+              <motion.div
+                key={track.id}
+                onClick={() => playTrack(index)}
+                className={`group flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all ${
+                  currentTrackIndex === index ? 'bg-primary/10 border border-primary/20' : 'hover:bg-card border border-transparent'
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="relative w-12 h-12 flex-shrink-0">
+                    <img src={track.cover} className="w-full h-full object-cover rounded-md" alt="" />
+                    {currentTrackIndex === index && isPlaying && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-md">
+                        <div className="flex gap-1 items-end h-4">
+                          <motion.div animate={{ height: [4, 16, 4] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1 bg-primary" />
+                          <motion.div animate={{ height: [10, 4, 10] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-1 bg-primary" />
+                          <motion.div animate={{ height: [6, 14, 6] }} transition={{ repeat: Infinity, duration: 0.7 }} className="w-1 bg-primary" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <h4 className={`font-bold transition-colors ${currentTrackIndex === index ? 'text-primary' : 'text-foreground'}`}>
+                      {track.title}
+                    </h4>
+                    <p className="text-xs text-muted-foreground uppercase tracking-widest">{track.artist} — {track.category}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-6">
+                  <span className="text-xs font-mono text-muted-foreground hidden sm:block">{track.duration}</span>
+                  <div className={`p-2 rounded-full border ${currentTrackIndex === index ? 'bg-primary text-white border-primary' : 'border-border text-muted-foreground'}`}>
+                    {currentTrackIndex === index && isPlaying ? <Pause size={16} /> : <Play size={16} fill="currentColor" />}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Right: Modern "Now Playing" Glass Card */}
+          <div className="lg:col-span-5 relative">
+            <motion.div 
+              key={currentTrackIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative aspect-square rounded-[2rem] overflow-hidden border border-border bg-card shadow-2xl p-8 flex flex-col justify-between"
+            >
+              <div className="absolute inset-0 opacity-20 blur-3xl -z-10" style={{ backgroundColor: 'var(--primary)' }} />
+              
+              <div className="flex justify-between items-start">
+                <div className="p-3 bg-background/50 backdrop-blur-lg rounded-2xl border border-white/10">
+                  <Music className="text-primary" />
+                </div>
+                <div className="flex -space-x-2">
+                   <div className="w-8 h-8 rounded-full bg-primary/20 border border-background flex items-center justify-center text-[10px] font-bold italic">HQ</div>
+                </div>
+              </div>
+
+              <div className="text-center space-y-2">
+                <motion.div 
+                  animate={isPlaying ? { rotate: 360 } : {}} 
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                  className="w-48 h-48 mx-auto mb-8 relative"
+                >
+                  <div className="absolute inset-0 border-4 border-dashed border-primary/20 rounded-full animate-spin-slow" />
+                  <img src={currentTrack.cover} className="w-full h-full object-cover rounded-full shadow-2xl p-2 border border-white/10" alt="" />
+                </motion.div>
+                <h3 className="text-3xl font-black tracking-tight">{currentTrack.title}</h3>
+                <p className="text-primary font-bold tracking-[0.3em] uppercase text-xs">{currentTrack.artist}</p>
+              </div>
+
+              {/* Player Controls */}
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <div className="h-1.5 w-full bg-secondary rounded-full overflow-hidden">
+                    <motion.div 
+                      className="h-full bg-primary" 
+                      style={{ width: `${progress}%` }} 
+                    />
+                  </div>
+                  <div className="flex justify-between text-[10px] font-mono text-muted-foreground uppercase tracking-tighter">
+                    <span>{audioRef.current ? Math.floor(audioRef.current.currentTime) : "0"}:00</span>
+                    <span>{currentTrack.duration}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-center items-center gap-8">
+                  <button className="text-muted-foreground hover:text-foreground transition-colors"><SkipBack /></button>
+                  <button 
+                    onClick={togglePlay}
+                    className="w-16 h-16 rounded-full bg-foreground text-background flex items-center justify-center hover:scale-105 transition-transform"
+                  >
+                    {isPlaying ? <Pause size={30} fill="currentColor" /> : <Play size={30} fill="currentColor" className="ml-1" />}
+                  </button>
+                  <button className="text-muted-foreground hover:text-foreground transition-colors"><SkipForward /></button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
+
+      <audio 
+        ref={audioRef} 
+        src={currentTrack.audioPath} 
+        onTimeUpdate={handleTimeUpdate}
+        onEnded={() => setIsPlaying(false)}
+      />
     </section>
   )
 }

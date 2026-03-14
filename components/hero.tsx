@@ -1,141 +1,117 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Play, ArrowRight } from "lucide-react"
+import { ArrowRight, Sparkles, Mic2, Music, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 export function Hero() {
   return (
-    <section className="min-h-screen relative overflow-hidden bg-background pt-20">
-      {/* Subtle grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
-      
-      {/* Accent glow */}
-      <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px] pointer-events-none" />
+    <section className="min-h-screen relative overflow-hidden bg-background pt-28 pb-16">
+      {/* Background Decor */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,#3b82f615,transparent_50%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[calc(100vh-80px)]">
-          {/* Left Side - Content */}
+        <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
+          
+          {/* Tagline */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col gap-8"
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 mb-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/50 border border-border rounded-full w-fit">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-sm text-muted-foreground">Now accepting new clients</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight text-balance">
-              Innovation{" "}
-              <span className="text-primary">&</span>{" "}
-              Precision
-              <br />
-              <span className="text-muted-foreground">in Music.</span>
-            </h1>
-            
-            <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
-              We craft chart-topping records and world-class brand identities for elite 
-              artists ready to dominate the global stage.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link href="/booking">
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium px-8 gap-2 group">
-                  Start Your Journey
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Button size="lg" variant="outline" className="border-border hover:bg-secondary/50 font-medium px-8">
-                View Portfolio
-              </Button>
-            </div>
-            
-            {/* Stats */}
-            <div className="flex gap-12 pt-8 border-t border-border mt-4">
-              <div>
-                <p className="text-3xl font-bold text-foreground">200+</p>
-                <p className="text-sm text-muted-foreground">Projects Delivered</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-foreground">50M+</p>
-                <p className="text-sm text-muted-foreground">Streams Generated</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-foreground">15+</p>
-                <p className="text-sm text-muted-foreground">Countries Served</p>
-              </div>
-            </div>
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
+              The Gold Standard of Production
+            </span>
           </motion.div>
           
-          {/* Right Side - VSL Player */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="relative"
+          {/* Main Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-8"
           >
-            <div className="relative aspect-video rounded-2xl overflow-hidden border border-border bg-card">
-              {/* Video placeholder with gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary via-background to-card" />
-              
-              {/* Subtle texture */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px]" />
-              
-              {/* Play button */}
-              <button className="absolute inset-0 flex items-center justify-center group">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/30 transition-colors" />
-                  <div className="relative w-20 h-20 rounded-full bg-primary flex items-center justify-center transition-transform group-hover:scale-110">
-                    <Play className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" />
-                  </div>
-                </div>
-              </button>
-              
-              {/* Label */}
-              <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
-                <span className="text-xs text-muted-foreground uppercase tracking-wider">Video Sales Letter</span>
-                <span className="text-xs text-muted-foreground">2:34</span>
+            SOUND THAT <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/40">
+              DEFINES AN ERA.
+            </span>
+          </motion.h1>
+          
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-10"
+          >
+            We don't just record music; we engineer legacy. From chart-topping 
+            sonics to iconic brand identities, we build the future of global sound.
+          </motion.p>
+          
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4 mb-20"
+          >
+            <Link href="/booking">
+              <Button size="lg" className="h-14 px-10 rounded-full bg-primary text-white font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20 group">
+                Start Your Legacy
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link >
+           
+          </motion.div>
+         
+          {/* Interactive Feature Grid (Replacing the Video) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl"
+          >
+            {/* Feature 1 */}
+            <div className="group p-8 rounded-3xl bg-card/50 border border-border backdrop-blur-xl hover:border-primary/50 transition-all duration-500 text-left">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Mic2 className="text-primary w-6 h-6" />
               </div>
+              <h3 className="text-xl font-bold mb-2">Elite Vocals</h3>
+              <p className="text-sm text-muted-foreground">Pristine clarity and character using world-class signal chains.</p>
             </div>
-            
-            {/* Floating elements */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-4 -right-4 px-4 py-2 bg-card border border-border rounded-lg"
-            >
-              <span className="text-sm font-medium text-foreground">🎵 Grammy-Nominated</span>
-            </motion.div>
-            
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -bottom-4 -left-4 px-4 py-2 bg-card border border-border rounded-lg"
-            >
-              <span className="text-sm font-medium text-foreground">✨ Premium Quality</span>
-            </motion.div>
+
+            {/* Feature 2 (The "Stylish" Center) */}
+            <div className="group p-8 rounded-3xl bg-primary text-primary-foreground transition-all duration-500 text-left shadow-2xl shadow-primary/30 relative overflow-hidden">
+               <div className="relative z-10">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center mb-6">
+                  <Music className="text-white w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-white">Platinum Mixing</h3>
+                <p className="text-sm text-white/80">Radio-ready sonics that cut through any speaker in the world.</p>
+               </div>
+               {/* Abstract decorative circles */}
+               <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+            </div>
+
+            {/* Feature 3 */}
+            <div className="group p-8 rounded-3xl bg-card/50 border border-border backdrop-blur-xl hover:border-primary/50 transition-all duration-500 text-left">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Award className="text-primary w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Iconic Branding</h3>
+              <p className="text-sm text-muted-foreground">Visual identities that make artists unforgettable on the global stage.</p>
+            </div>
           </motion.div>
         </div>
       </div>
-      
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-6 h-10 rounded-full border-2 border-border flex items-start justify-center p-2"
-        >
-          <div className="w-1 h-2 bg-muted-foreground rounded-full" />
-        </motion.div>
-      </motion.div>
+
+      {/* Background Glows */}
+      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
     </section>
   )
 }
