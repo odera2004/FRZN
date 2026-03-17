@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Instagram, Twitter, Youtube, Linkedin } from "lucide-react"
+import { Instagram, Twitter, Youtube, } from "lucide-react"
 
 const footerLinks = {
   navigation: [
@@ -20,7 +20,7 @@ const footerLinks = {
     { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
     { href: "https://twitter.com", icon: Twitter, label: "Twitter" },
     { href: "https://youtube.com", icon: Youtube, label: "YouTube" },
-    { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
+    
   ],
 }
 
@@ -95,10 +95,10 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="mailto:hello@frzndigital.com"
+                  href="mailto:Justelijvh@frznsociety.net"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  hello@frzndigital.com
+                  Justelijvh@frznsociety.net
                 </a>
               </li>
               <li>
