@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRight, Sparkles, Mic2, Music, Award } from "lucide-react"
+import { ArrowRight, Sparkles, Mic2, Music, Waves, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -15,16 +15,22 @@ export function Hero() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
           
-          {/* Tagline */}
+          {/* Tagline / Partnership Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 mb-8"
+            className="inline-flex flex-wrap justify-center items-center gap-4 px-6 py-2 rounded-full bg-primary/5 border border-primary/20 mb-8"
           >
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
-              The Gold Standard of Production
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span className="text-[10px] md:text-xs font-bold tracking-[0.1em] text-primary uppercase">
+                50+ Creative Partners
+              </span>
+            </div>
+            <div className="w-1 h-1 rounded-full bg-primary/30 hidden md:block" />
+            <span className="text-[10px] md:text-xs font-bold tracking-[0.1em] text-primary uppercase">
+              98% Satisfaction
             </span>
           </motion.div>
           
@@ -35,9 +41,10 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-8"
           >
-            SOUND THAT <br />
+            YOUR SOUND. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/40">
-              DEFINES AN ERA.
+              YOUR STORY. <br />
+              OUR PARTNERSHIP.
             </span>
           </motion.h1>
           
@@ -48,8 +55,8 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-10"
           >
-            We don't just record music; we engineer legacy. From chart-topping 
-            sonics to iconic brand identities, we build the future of global sound.
+            Every artist gets a dedicated sound vision. We collaborate globally to turn your 
+            creative identity into a sonic masterpiece.
           </motion.p>
           
           {/* CTAs */}
@@ -57,18 +64,25 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 mb-20"
+            className="flex flex-col items-center gap-6 mb-20"
           >
             <Link href="/booking">
               <Button size="lg" className="h-14 px-10 rounded-full bg-primary text-white font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20 group">
-                Start Your Legacy
+                Book Your Vision Call
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link >
-           
+
+            {/* Global Presence Label */}
+            <div className="flex items-center gap-3 text-muted-foreground/60">
+              <Globe className="w-4 h-4" />
+              <span className="text-xs font-medium tracking-widest uppercase">
+                UK • USA • AUS • KENYA
+              </span>
+            </div>
           </motion.div>
          
-          {/* Interactive Feature Grid (Replacing the Video) */}
+          {/* Feature Grid */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -84,7 +98,7 @@ export function Hero() {
               <p className="text-sm text-muted-foreground">Pristine clarity and character using world-class signal chains.</p>
             </div>
 
-            {/* Feature 2 (The "Stylish" Center) */}
+            {/* Feature 2 (Platinum Mixing) */}
             <div className="group p-8 rounded-3xl bg-primary text-primary-foreground transition-all duration-500 text-left shadow-2xl shadow-primary/30 relative overflow-hidden">
                <div className="relative z-10">
                 <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center mb-6">
@@ -93,17 +107,16 @@ export function Hero() {
                 <h3 className="text-xl font-bold mb-2 text-white">Platinum Mixing</h3>
                 <p className="text-sm text-white/80">Radio-ready sonics that cut through any speaker in the world.</p>
                </div>
-               {/* Abstract decorative circles */}
                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
             </div>
 
-            {/* Feature 3 */}
+            {/* Feature 3 (Updated: Unique Sound Design) */}
             <div className="group p-8 rounded-3xl bg-card/50 border border-border backdrop-blur-xl hover:border-primary/50 transition-all duration-500 text-left">
               <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Award className="text-primary w-6 h-6" />
+                <Waves className="text-primary w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Iconic Branding</h3>
-              <p className="text-sm text-muted-foreground">Visual identities that make artists unforgettable on the global stage.</p>
+              <h3 className="text-xl font-bold mb-2">Unique Sound Design</h3>
+              <p className="text-sm text-muted-foreground">Custom textures and sonic signatures that make you unforgettable.</p>
             </div>
           </motion.div>
         </div>

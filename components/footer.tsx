@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Instagram, Twitter, Youtube, } from "lucide-react"
+import { Instagram, Twitter, Youtube, Music2 } from "lucide-react"
 
 const footerLinks = {
   navigation: [
@@ -17,9 +17,9 @@ const footerLinks = {
     { href: "/booking", label: "Book a Vision Call" },
   ],
   socials: [
-    { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
-    { href: "https://twitter.com", icon: Twitter, label: "Twitter" },
-    { href: "https://youtube.com", icon: Youtube, label: "YouTube" },
+    { href: "https://www.instagram.com/justelijvh", icon: Instagram, label: "Instagram" },
+    { name: "TikTok", href: "https://www.tiktok.com/@justelijvh", icon: Music2 },
+    { href: "https://www.youtube.com/@justelijvh8078", icon: Youtube, label: "YouTube" },
     
   ],
 }

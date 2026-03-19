@@ -1,184 +1,154 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { Play, Pause, SkipBack, SkipForward, Music } from "lucide-react"
-import { useRef, useState, useEffect } from "react"
+import { Disc, Sparkles, Headphones, Music, ExternalLink, Play } from "lucide-react"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
 
 const tracks = [
-  {
-    id: 1,
-    title: "Midnight Echoes",
-    artist: "LUNA",
-    duration: "3:42",
-    category: "Full Production",
-    audioPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387526/WhatsApp_Video_2026-03-12_at_19.17.31_3_aep6ks.mp4",
-    cover: "/Images/eli-1.jpeg" // Your original image
-  },
-  {
-    id: 2,
-    title: "Rise Up",
-    artist: "PHOENIX",
-    duration: "2:58",
-    category: "Songwriting",
-    audioPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387495/WhatsApp_Video_2026-03-12_at_19.17.30_1_o82fpl.mp4",
-    cover: "/Images/eli-2.jpeg" // Your original image
-  },
-  {
-    id: 3,
-    title: "Neon Dreams",
-    artist: "CIPHER",
-    duration: "3:15",
-    category: "Mixing & Mastering",
-    audioPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773387357/WhatsApp_Video_2026-03-12_at_19.17.29_2_pjderd.mp4",
-    cover: "/Images/eli-3.jpeg" // Your original image
-  },
+  { id: 1, title: "Max of Mary", artist: "Seyi Max", category: "Full Production", spotifyId: "https://open.spotify.com/track/6K4dAuYl1wBLOPkPc78biI?si=ccc4157d4e614ae5", cover: "/Images/eli-1.jpeg" },
+  { id: 2, title: "Road Raves", artist: "Seyi Max", category: "Full Production", spotifyId: "https://open.spotify.com/track/6dcKq81gYDRmOS9Llgn7sR?si=5a8afaa5921f4c2b", cover: "/Images/eli-1.jpeg" },
+  { id: 3, title: "Too Real In Living Life 2", artist: "Trill Tega", category: "Mixing & Mastering", spotifyId: "https://open.spotify.com/track/3RXTDa4qRnGAW7kM953AIt?si=a241a3e9ce3040cc", cover: "/Images/eli-6.jpeg" },
+  { id: 4, title: "Trip and Fall", artist: "Seyi Max", category: "Production", spotifyId: "https://open.spotify.com/track/697KIt6CfAgGjYlzN5zKUi?si=49e991fa62a74993", cover: "/Images/eli-1.jpeg" },
+  { id: 5, title: "Freemybandz", artist: "Treasure Donavann", category: "Mixing", spotifyId: "https://open.spotify.com/track/4x34WlJMxMtUUt7dcP0ck9?si=ec354d318c854fe0", cover: "/Images/eli-3.jpeg" },
+  { id: 6, title: "IN A FILTER", artist: "Glen Felix", category: "Full Production", spotifyId: "https://open.spotify.com/track/3IduUE1rRAHwrc2AV0293c?si=b1dce45b1404441d", cover: "/Images/eli-2.jpeg" },
+  { id: 7, title: "Pretty Gal", artist: "Glen Felix", category: "Vocal Engineering", spotifyId: "https://open.spotify.com/track/3DLkysqC70YXQ36K4wkc1Y?si=2acc4f0084554e26", cover: "/Images/eli-2.jpeg" }
 ]
 
 export function PortfolioPlaylist() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const audioRef = useRef<HTMLAudioElement>(null)
-
-  const currentTrack = tracks[currentTrackIndex]
-
-  useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch(() => setIsPlaying(false))
-      } else {
-        audioRef.current.pause()
-      }
-    }
-  }, [isPlaying, currentTrackIndex])
-
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      const p = (audioRef.current.currentTime / audioRef.current.duration) * 100
-      setProgress(p)
-    }
-  }
-
-  const togglePlay = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setIsPlaying(!isPlaying)
-  }
-
-  const playTrack = (index: number) => {
-    setCurrentTrackIndex(index)
-    setIsPlaying(true)
-  }
+  const current = tracks[currentTrackIndex]
+  const spotifyLink = `${current.spotifyId}`
 
   return (
-    <section id="portfolio" className="py-20 bg-background overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6">
-          <div className="text-center md:text-left">
-            <p className="text-xs text-primary uppercase tracking-[0.4em] font-bold mb-3">Discography</p>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter">THE SOUNDBOARD</h2>
+    <section id="portfolio" className="py-24 bg-background relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,#3b82f605,transparent_70%)] pointer-events-none" />
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
+              <Sparkles className="w-3 h-3 text-primary" />
+              <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Studio Discography</span>
+            </div>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.85]">
+              THE <span className="text-muted-foreground/20 italic">SOUND</span><br />BOARD
+            </h2>
           </div>
-          <p className="text-muted-foreground max-w-xs text-sm leading-relaxed hidden md:block text-right">
-            Sonic innovation meets visual storytelling.
-          </p>
+          <div className="hidden md:block text-right">
+             <Headphones className="w-8 h-8 text-primary/20 ml-auto mb-2" />
+             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">Select a record</p>
+          </div>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
-          {/* Playlist List */}
-          <div className="lg:col-span-7 space-y-2 order-2 lg:order-1">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          {/* Track List (Left) */}
+          <div className="lg:col-span-5 space-y-2 order-2 lg:order-1 max-h-[500px] overflow-y-auto pr-2 scrollbar-hide">
             {tracks.map((track, index) => (
-              <motion.div
+              <button
                 key={track.id}
-                onClick={() => playTrack(index)}
-                className={`group flex items-center justify-between p-3 rounded-2xl cursor-pointer transition-all ${
-                  currentTrackIndex === index ? 'bg-primary/10 border border-primary/20' : 'hover:bg-card border border-transparent'
+                onClick={() => setCurrentTrackIndex(index)}
+                className={`w-full group relative flex items-center gap-6 p-4 rounded-2xl transition-all duration-300 border ${
+                  currentTrackIndex === index 
+                  ? 'bg-primary/5 border-primary/30 shadow-lg' 
+                  : 'bg-transparent border-transparent hover:bg-secondary/40'
                 }`}
               >
-                <div className="flex items-center gap-4">
-                  <img src={track.cover} className="w-12 h-12 object-cover rounded-lg" alt={track.title} />
-                  <div>
-                    <h4 className={`text-sm font-bold ${currentTrackIndex === index ? 'text-primary' : 'text-foreground'}`}>
-                      {track.title}
-                    </h4>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{track.artist}</p>
-                  </div>
+                <span className={`text-xs font-black ${currentTrackIndex === index ? 'text-primary' : 'text-muted-foreground/30'}`}>
+                  0{index + 1}
+                </span>
+                <div className="text-left flex-1">
+                  <h4 className={`text-sm font-bold leading-none mb-1 ${currentTrackIndex === index ? 'text-foreground' : 'text-muted-foreground/60'}`}>
+                    {track.title}
+                  </h4>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40">{track.artist}</p>
                 </div>
-                <div className={`p-2 rounded-full border ${currentTrackIndex === index ? 'bg-primary text-white border-primary' : 'border-border text-muted-foreground'}`}>
-                  {currentTrackIndex === index && isPlaying ? <Pause size={14} /> : <Play size={14} fill="currentColor" />}
-                </div>
-              </motion.div>
+                {currentTrackIndex === index && (
+                   <div className="flex gap-1 h-3 items-end">
+                      {[1, 2, 3].map(i => (
+                        <motion.div key={i} animate={{ height: [2, 12, 4, 10, 2] }} transition={{ repeat: Infinity, duration: 0.6, delay: i * 0.1 }} className="w-0.5 bg-primary rounded-full" />
+                      ))}
+                   </div>
+                )}
+              </button>
             ))}
           </div>
 
-          {/* Player Card - Mobile Fixed */}
-          <div className="lg:col-span-5 order-1 lg:order-2">
-            <motion.div 
-              key={currentTrackIndex}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="relative rounded-[2rem] border border-border bg-card shadow-2xl p-6 flex flex-col items-center overflow-hidden"
-            >
-              <div className="absolute inset-0 opacity-10 blur-3xl -z-10 bg-primary" />
-              
-              <div className="w-full flex justify-between items-center mb-6">
-                 <div className="p-2 bg-background/50 rounded-lg border border-white/5 text-primary">
-                    <Music size={18} />
-                 </div>
-                 <span className="text-[10px] font-bold text-primary tracking-widest bg-primary/10 px-2 py-1 rounded-full uppercase">Studio High-Fidelity</span>
-              </div>
-
-              {/* Cover Image Container */}
+          {/* Fully Responsive "Studio Monitor" Player (Right) */}
+          <div className="lg:col-span-7 order-1 lg:order-2 w-full">
+            <AnimatePresence mode="wait">
               <motion.div 
-                animate={isPlaying ? { rotate: 360 } : {}} 
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="w-48 h-48 md:w-64 md:h-64 mb-6 relative"
+                key={currentTrackIndex}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
+                // FIX: Removed aspect-video. Added min-h and vertical padding (py-12 md:py-16)
+                // This allows the container to stretch vertically to fit the disc on mobile.
+                className="relative min-h-[400px] md:min-h-[500px] w-full rounded-[2.5rem] border border-white/10 bg-zinc-950 overflow-hidden flex items-center justify-center py-12 px-6 md:py-16 md:px-10 shadow-2xl group/player"
               >
-                <div className="absolute inset-0 border-2 border-dashed border-primary/20 rounded-full" />
-                <img 
-                  src={currentTrack.cover} 
-                  className="w-full h-full object-cover rounded-full p-1.5 shadow-2xl border border-white/10" 
-                  alt="" 
-                />
+                {/* Visual Background Artwork */}
+                <div className="absolute inset-0 z-0">
+                  <img src={current.cover} className="w-full h-full object-cover opacity-40 blur-3xl scale-125" alt="" />
+                  <div className="absolute inset-0 bg-black/70 shadow-[inset_0_0_100px_rgba(0,0,0,0.8)]" />
+                </div>
+
+                <div className="relative z-10 w-full max-w-md text-center flex flex-col items-center justify-center gap-y-8 md:gap-y-10">
+                  {/* The Rotating Disc Container */}
+                  <div className="relative w-32 h-32 md:w-48 md:h-48 shrink-0">
+                    <motion.div 
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                      className="absolute inset-0 rounded-full border-2 border-dashed border-primary/40 p-2 shadow-2xl shadow-black/50"
+                    >
+                      <img src={current.cover} className="w-full h-full object-cover rounded-full" alt="" />
+                    </motion.div>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-full pointer-events-none" />
+                    {/* The Center Hole (Authenticity razzle dazzle) */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 md:w-6 md:h-6 bg-zinc-950 rounded-full border border-white/10 shadow-inner z-10" />
+                  </div>
+
+                  {/* Text Details */}
+                  <div className="w-full">
+                    <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-none mb-3 break-words">
+                      {current.title}
+                    </h3>
+                    <div className="flex items-center justify-center gap-3">
+                      <span className="h-[1px] w-6 md:w-8 bg-primary/40 shrink-0" />
+                      <p className="text-primary font-bold tracking-[0.4em] uppercase text-[9px] md:text-[10px] whitespace-nowrap">
+                        {current.artist}
+                      </p>
+                      <span className="h-[1px] w-6 md:w-8 bg-primary/40 shrink-0" />
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="w-full pt-2">
+                    <a 
+                      href={spotifyLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-3 bg-[#1DB954] hover:bg-[#1ed760] text-black font-black text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all hover:scale-105 active:scale-95 shadow-xl shadow-[#1DB954]/30 group"
+                    >
+                      <Play size={16} fill="black" className="group-hover:translate-x-0.5 transition-transform" />
+                      Listen on Spotify
+                      <ExternalLink size={14} className="opacity-50" />
+                    </a>
+                    <p className="text-[9px] text-white/30 uppercase mt-4 tracking-widest font-bold font-mono">
+                      HQ Stream // 24-bit studio audio
+                    </p>
+                  </div>
+                </div>
               </motion.div>
-
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-black tracking-tight">{currentTrack.title}</h3>
-                <p className="text-primary font-bold tracking-[0.3em] uppercase text-[10px] mt-1">{currentTrack.artist}</p>
-              </div>
-
-              {/* Progress & Controls */}
-              <div className="w-full space-y-6">
-                <div className="space-y-2">
-                  <div className="h-1 w-full bg-secondary rounded-full overflow-hidden">
-                    <motion.div className="h-full bg-primary" style={{ width: `${progress}%` }} />
-                  </div>
-                  <div className="flex justify-between text-[10px] font-mono text-muted-foreground uppercase">
-                    <span>{audioRef.current ? Math.floor(audioRef.current.currentTime / 60) : "0"}:{String(Math.floor(audioRef.current?.currentTime || 0) % 60).padStart(2, '0')}</span>
-                    <span>{currentTrack.duration}</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-center items-center gap-8">
-                  <button onClick={(e) => { e.stopPropagation(); setCurrentTrackIndex((prev) => (prev - 1 + tracks.length) % tracks.length)}} className="text-muted-foreground hover:text-foreground transition-colors"><SkipBack size={20} /></button>
-                  <button 
-                    onClick={togglePlay}
-                    className="w-14 h-14 rounded-full bg-foreground text-background flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-xl"
-                  >
-                    {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" className="ml-1" />}
-                  </button>
-                  <button onClick={(e) => { e.stopPropagation(); setCurrentTrackIndex((prev) => (prev + 1) % tracks.length)}} className="text-muted-foreground hover:text-foreground transition-colors"><SkipForward size={20} /></button>
-                </div>
-              </div>
-            </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
 
-      <audio 
-        ref={audioRef} 
-        src={currentTrack.audioPath} 
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)}
-      />
+      <style jsx global>{`
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </section>
   )
 }

@@ -41,7 +41,7 @@ const testimonials: Testimonial[] = [
     company: "Sony Music",
     videoPath: "https://res.cloudinary.com/do0mtxjce/video/upload/f_auto,q_auto/v1773385933/WhatsApp_Video_2026-03-12_at_17.54.14_xqqkik.mp4",
     quote: "This has completely redefined how we approach audio production. The results speak for themselves.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
+    image: "/Images/eli-5.jpeg"
   },
 ]
 

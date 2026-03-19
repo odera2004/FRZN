@@ -9,7 +9,7 @@ import Link from "next/link"
 import emailjs from "@emailjs/browser"
 
 const contactInfo = [
-  { icon: Mail, label: "Email", value: "Justelijvh@frznsociety.net", href: "mailto:hello@frzndigital.com" },
+  { icon: Mail, label: "Email", value: "Justelijvh@frznsociety.net", href: "mailto:justelijvh@frznsociety.net" },
   { icon: MapPin, label: "Global Offices", value: "UK • USA • AUS • KENYA", href: null },
   { icon: Clock, label: "Response", value: "Within 24 Hours", href: null },
 ]
